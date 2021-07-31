@@ -7,7 +7,7 @@
     "start-demo": "ng serve demo",
     "install-nested": "npm install --scripts-prepend-node-path=auto",
     "build": "ng build",
-    "build-lib": "ng build ngx-rbac --prod",
+    "build-lib": "ng build ngx-rbac --configuration production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
