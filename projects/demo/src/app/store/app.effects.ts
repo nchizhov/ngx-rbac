@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { DoGlobalRulesService } from '@doce/ngx-rbac';
+import { DoGlobalRulesService } from 'ngx-rbac';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+
 import { appActions } from './app.actions';
 import { unauthorizedRole } from '../rbac/roles';
 

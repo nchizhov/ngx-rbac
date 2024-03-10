@@ -2,7 +2,7 @@
 import { moderatorRole, unauthorizedRole } from './rbac/roles';
 import { canSeeUserListPermission, AppPermissions } from './rbac/permissions';
 import { AppRules, ruleSet } from './rbac/rules';
-import { DoGlobalRulesService, DoRoleType } from '@doce/ngx-rbac';
+import { DoGlobalRulesService, DoRoleType } from 'ngx-rbac';
 
 // Store
 import { appActions } from './store/app.actions';
@@ -15,7 +15,6 @@ import { select, Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',

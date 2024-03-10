@@ -1,26 +1,23 @@
 // RBAC
-import { DoGlobalRulesService, DoRoleType } from '@doce/ngx-rbac';
-import { AppPermissions } from './../../rbac/permissions';
+import { DoGlobalRulesService, DoRoleType } from 'ngx-rbac';
+import { AppPermissions } from '../../rbac/permissions';
 import {
   AppRoles,
   authorizedRole,
   moderatorRole,
   restoratorRole,
-} from './../../rbac/roles';
+} from '../../rbac/roles';
 
 // Store
 import { Store } from '@ngrx/store';
-import { appActions } from './../../store/app.actions';
-import { AppState } from './../../store/app.reducer';
-import { selectUserEntities } from './../../store/app.selectors';
+import { appActions } from '../../store/app.actions';
+import { AppState } from '../../store/app.reducer';
+import { selectUserEntities } from '../../store/app.selectors';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-
-
-
 
 @Component({
   selector: 'app-edit',

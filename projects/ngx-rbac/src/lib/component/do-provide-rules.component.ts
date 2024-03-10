@@ -7,14 +7,14 @@ import {
   Optional,
   SkipSelf,
 } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { DoProvideRulesService } from '../service/do-provide-rules.service';
 import { DoStringDictionary } from '../type/do-dictionary';
 import { DoRuleType } from '../type/do-rule-type';
 import { DoRoleType } from '../type/do-role-type';
 import { TypedSimpleChanges } from '../type/typed-simple-changes';
-import { takeUntil } from 'rxjs/operators';
 import { DoRule } from '../model/do-rule';
 
 interface IDoProvideRulesComponent {
@@ -24,7 +24,8 @@ interface IDoProvideRulesComponent {
 
 @Component({
   selector: 'do-provide-rules',
-  template: `<ng-content></ng-content>`,
+  template: `
+    <ng-content></ng-content>`,
   styles: [],
   providers: [DoProvideRulesService],
 })
@@ -33,14 +34,15 @@ export class DoProvideRulesComponent
   @Input() rules: DoStringDictionary<DoRuleType> | DoRuleType = {};
   @Input() roles: DoRoleType[];
 
-  private destroy$ = new Subject<void>();
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     @Optional()
     @SkipSelf()
     private source: DoProvideRulesComponent,
-    public provideRulesService: DoProvideRulesService
-  ) {}
+    public provideRulesService: DoProvideRulesService,
+  ) {
+  }
 
   ngOnChanges(changes: TypedSimpleChanges<IDoProvideRulesComponent>): void {
     if (
@@ -49,7 +51,7 @@ export class DoProvideRulesComponent
     ) {
       this.concatRules(
         this.source?.provideRulesService.localRulesValue,
-        changes.rules.currentValue
+        changes.rules.currentValue,
       );
     }
 
@@ -59,7 +61,7 @@ export class DoProvideRulesComponent
     ) {
       this.concatRoles(
         this.source?.provideRulesService.localRolesValue,
-        changes.roles.currentValue
+        changes.roles.currentValue,
       );
     }
   }
@@ -83,20 +85,20 @@ export class DoProvideRulesComponent
 
   private concatRules(
     parentRules: DoStringDictionary<DoRuleType>,
-    currentRules: DoStringDictionary<DoRuleType> | DoRuleType
+    currentRules: DoStringDictionary<DoRuleType> | DoRuleType,
   ): void {
     if (currentRules instanceof DoRule) {
       currentRules = { [currentRules.name]: currentRules };
     }
     this.provideRulesService.nextRules(
       parentRules || {},
-      (currentRules as DoStringDictionary<DoRuleType>) || {}
+      (currentRules as DoStringDictionary<DoRuleType>) || {},
     );
   }
 
   private concatRoles(
     parentRoles: DoRoleType[],
-    currentRoles: DoRoleType[]
+    currentRoles: DoRoleType[],
   ): void {
     this.provideRulesService.nextRoles(parentRoles || [], currentRoles || []);
   }

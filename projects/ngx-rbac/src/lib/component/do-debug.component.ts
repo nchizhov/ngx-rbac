@@ -1,6 +1,6 @@
 import { Component, Optional, SkipSelf } from '@angular/core';
 
-import { DoProvideRulesComponent } from '../component/do-provide-rules.component';
+import { DoProvideRulesComponent } from './do-provide-rules.component';
 import { DoGlobalRulesService } from '../service/do-global-rules.service';
 
 @Component({
@@ -27,8 +27,8 @@ import { DoGlobalRulesService } from '../service/do-global-rules.service';
         <br />
         <strong>Local:</strong>
         <pre>{{
-          this.source.provideRulesService.permitted$ | async | json
-        }}</pre>
+            this.source.provideRulesService.permitted$ | async | json
+          }}</pre>
       </div>
     </div>
     <hr />
@@ -46,12 +46,14 @@ import { DoGlobalRulesService } from '../service/do-global-rules.service';
   styles: ['.hide { display: none; }'],
 })
 export class DoDebugComponent {
-  showRules = false;
-  showPermissions = false;
+  showRules: boolean = false;
+  showPermissions: boolean = false;
+
   constructor(
     @Optional()
     @SkipSelf()
     public source: DoProvideRulesComponent,
-    public globalRulesService: DoGlobalRulesService
-  ) {}
+    public globalRulesService: DoGlobalRulesService,
+  ) {
+  }
 }

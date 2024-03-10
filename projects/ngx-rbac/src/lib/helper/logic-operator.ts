@@ -9,13 +9,14 @@ import {
   DoRuleOptions,
 } from '../type/do-rule-options';
 import { DoRuleType } from '../type/do-rule-type';
-import { creatStringRule, DoRule } from '../model/do-rule';
+import { DoRule } from '../model/do-rule';
 import { DoRole } from '../model/do-role';
+import { creatStringRule } from '../model/do-others';
 
 export function doAnd(
   checkers: AllPossibleCheckers[],
   options: DoRuleOptions = DefaultRuleOptions,
-  name = 'Logical and'
+  name: string = 'Logical and',
 ): DoRuleType {
   checkers = checkers.filter((chk) => !!chk);
   if (!checkers || checkers?.length === 0) {
@@ -27,13 +28,13 @@ export function doAnd(
   const parentRule = new DoRule((args: any[], dependency: Dependency) => {
     return anyCheckerToDoChecker(checkers, parentRule)
       .map(safeRunCheck(args, dependency, options))
-      .every((val) =>
+      .every((val: boolean): boolean =>
         val === null
           ? [
-              DoAbsentRuleBehavior.ignore,
-              DoAbsentRuleBehavior.warnings,
-            ].includes(options.absentRuleBehavior)
-          : val
+            DoAbsentRuleBehavior.ignore,
+            DoAbsentRuleBehavior.warnings,
+          ].includes(options.absentRuleBehavior)
+          : val,
       ); // todo check ignore and warnings behavior
   }, name);
 
@@ -43,7 +44,7 @@ export function doAnd(
 export function doOr(
   checkers: AllPossibleCheckers[],
   options: DoRuleOptions = DefaultRuleOptions,
-  name = 'Logical or'
+  name: string = 'Logical or',
 ): DoRuleType {
   checkers = checkers.filter((chk) => !!chk);
   if (!checkers || checkers?.length === 0) {
@@ -55,8 +56,8 @@ export function doOr(
   const parentRule = new DoRule((args: any[], dependency: Dependency) => {
     return anyCheckerToDoChecker(checkers, parentRule)
       .map(safeRunCheck(args, dependency, options))
-      .filter((val) => val !== null)
-      .some((val) => val); // todo check ignore and warnings behavior
+      .filter((val: boolean): boolean => val !== null)
+      .some((val: boolean) => val); // todo check ignore and warnings behavior
   }, name);
 
   return parentRule;
@@ -65,7 +66,7 @@ export function doOr(
 export function doNot(
   checker: AllPossibleCheckers,
   options: DoRuleOptions = DefaultRuleOptions,
-  name = 'Logical not'
+  name: string = 'Logical not',
 ): DoRuleType {
   if (!checker) {
     return null;
@@ -76,11 +77,11 @@ export function doNot(
   const parentRule = new DoRule((args: any[], dependency: Dependency) => {
     return !anyCheckerToDoChecker(
       Array.isArray(checker) ? checker : [checker],
-      parentRule
+      parentRule,
     )
       .map(safeRunCheck(args, dependency, options))
-      .filter((val) => val !== null)
-      .every((val) => val); // todo check ignore and warnings behavior
+      .filter((val: boolean): boolean => val !== null)
+      .every((val: boolean) => val); // todo check ignore and warnings behavior
   }, name);
 
   return parentRule;
@@ -88,7 +89,7 @@ export function doNot(
 
 function anyCheckerToDoChecker(
   checkers: AllPossibleCheckers[],
-  parentRule: DoRule
+  parentRule: DoRule,
 ): DoRule[] {
   return checkers
     .filter((chk) => !!chk)
@@ -97,8 +98,8 @@ function anyCheckerToDoChecker(
         checker instanceof DoRule
           ? checker
           : typeof checker === 'string'
-          ? creatStringRule(checker)
-          : new DoRule(checker as DoCheckerFunction, `Simple rule: ${(checker as any).id} ${checker}`);
+            ? creatStringRule(checker)
+            : new DoRule(checker as DoCheckerFunction, `Simple rule: ${(checker as any).id} ${checker}`);
       parentRule.assignChildRules(rule);
 
       return rule;
@@ -108,7 +109,7 @@ function anyCheckerToDoChecker(
 function safeRunCheck(
   args: any[],
   dependency: Dependency,
-  options: DoRuleOptions
+  options: DoRuleOptions,
 ) {
   return (checker: DoRule) => {
     try {
@@ -125,11 +126,11 @@ function safeRunCheck(
   };
 }
 
-function getCheckerName(checkers: AllPossibleCheckers[]) {
+function getCheckerName(checkers: AllPossibleCheckers[]): string {
   return (
     ' (' +
     checkers
-      .map((checker) => {
+      .map((checker): string => {
         if (
           checker instanceof DoRule ||
           checker instanceof DoRole ||
@@ -137,8 +138,8 @@ function getCheckerName(checkers: AllPossibleCheckers[]) {
         ) {
           return checker.toString();
         }
-        const id = Math.floor(Math.random() * 100);
-        (checker as any ).id = id;
+        const id: number = Math.floor(Math.random() * 100);
+        (checker as any).id = id;
         return `{function ${id}}`;
       })
       .join(', ') +

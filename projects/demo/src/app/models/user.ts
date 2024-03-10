@@ -1,4 +1,4 @@
-import { DoRoleType } from '@doce/ngx-rbac';
+import { DoRoleType } from 'ngx-rbac';
 
 export interface User {
   id: string;

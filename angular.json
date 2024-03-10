@@ -295,8 +295,5 @@
         }
       }
     }},
-  "cli": {
-    "analytics": false
-  },
   "defaultProject": "ngx-rbac"
 }

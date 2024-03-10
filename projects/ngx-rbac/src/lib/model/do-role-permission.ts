@@ -7,16 +7,19 @@ export class DoRolePermission implements DoRolePermissionType {
   get canNames(): string[] {
     return this._canNames;
   }
+
   get can(): DoStringDictionary<DoRuleType> {
     return this._can;
   }
+
   private _can: DoStringDictionary<DoRuleType>;
   private _canNames: string[];
   protected _canSelf: DoStringDictionary<DoRuleType>;
   protected _canNamesSelf: string[];
   public name: string;
+
   constructor(name: string) {
-    this._canSelf = { [name]: new DoRule(() => true, name) };
+    this._canSelf = { [name]: new DoRule((): boolean => true, name) };
     this._canNamesSelf = [name];
     this.name = name;
   }

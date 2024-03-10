@@ -1,31 +1,28 @@
 {
-  "name": "@doce/ngx-rbac",
-  "version": "1.0.2",
+  "name": "@inok/ngx-rbac",
+  "version": "1.0.3",
   "peerDependencies": {
-    "@angular/common": "^9.0.7",
-    "@angular/core": "^9.0.7"
+    "@angular/common": "^13.3.0",
+    "@angular/core": "^13.3.0"
   },
-  "description": "This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.7.",
-  "main": "karma.conf.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/docentovich/ngx-rbac.git"
-  },
+  "description": "Forked angular library for RBAC",
+  "repository": "git@github.com:nchizhov/ngx-rbac.git",
   "keywords": [
     "rbac",
     "access",
     "access-control"
   ],
   "author": "Andrey Prozorov (mailto:docentovich@gmila.com)",
+  "contributors": [{
+    "name": "Chizhov Nikolay",
+    "email": "admin@kgd.in",
+    "url": "http://blog.kgd.in"
+  }],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/docentovich/ngx-rbac/issues"
+    "url": "https://github.com/nchizhov/ngx-rbac/issues"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
-  },
-  "homepage": "https://github.com/docentovich/ngx-rbac#readme"
+    "tslib": "^2.3.0"
+  }
 }

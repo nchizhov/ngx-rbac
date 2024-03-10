@@ -11,10 +11,11 @@ import {
   doCreateRuleSet,
   DoGlobalRulesService,
   DoProvideRulesComponent
-} from '@doce/ngx-rbac';
-import { admin, guest } from './app.component';
+} from 'ngx-rbac';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { admin, guest } from './app.component';
 
 @Component({
   selector: 'app-hello',

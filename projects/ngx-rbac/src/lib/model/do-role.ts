@@ -16,11 +16,12 @@ export class DoRole extends DoRolePermission implements DoRoleType, DoDebugType 
         ...acc,
         ...this._canSelf,
         ...children.can,
-        ...this._assignedRules
+        ...this._assignedRules,
       }),
-      {}
+      {},
     );
   }
+
   get canNames(): string[] {
     return this._childes.reduce(
       (acc: string[], children) => [
@@ -28,15 +29,15 @@ export class DoRole extends DoRolePermission implements DoRoleType, DoDebugType 
         ...this._canNamesSelf,
         ...children.canNames,
       ],
-      []
+      [],
     );
   }
 
-  addPermissionsOf(child: DoRolePermissionType) {
+  addPermissionsOf(child: DoRolePermissionType): void {
     this._childes.push(child);
   }
 
-  addRule(rule: DoRuleType | DoStringDictionary<DoRuleType>) {
+  addRule(rule: DoRuleType | DoStringDictionary<DoRuleType>): void {
     let _rule = rule;
     if (rule instanceof DoRule) {
       _rule = { [rule.name]: rule };
@@ -48,7 +49,7 @@ export class DoRole extends DoRolePermission implements DoRoleType, DoDebugType 
     });
   }
 
-  toString() {
+  toString(): string {
     return this.name;
   }
 }

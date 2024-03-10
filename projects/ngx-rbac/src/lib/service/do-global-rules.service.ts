@@ -53,7 +53,7 @@ export class DoGlobalRulesService {
     map(([permissions, globalRules, roles]) => ({
       globalRules: { ...permissions, ...globalRules },
       roles,
-    }))
+    })),
   );
 
   // todo check if possible mutation
@@ -63,8 +63,8 @@ export class DoGlobalRulesService {
 
   addGlobalRules(
     rules: DoStringDictionary<DoRuleType> | DoRuleType,
-    replaceGroupName?: string
-  ) {
+    replaceGroupName?: string,
+  ): void {
     if (rules instanceof DoRule) {
       rules = { [rules.name]: rules };
     }
@@ -78,7 +78,7 @@ export class DoGlobalRulesService {
     });
   }
 
-  changeRoles(roles: DoRoleType[]) {
+  changeRoles(roles: DoRoleType[]): void {
     roles = roles ?? [];
     this._permitted$.next(permitted(roles));
     this._roles$.next(roles);
@@ -89,7 +89,7 @@ export class DoGlobalRulesService {
       [this.rolesValue, this.rulesAndPermissionsValue],
       this.rulesAndPermissionsValue,
       ruleName,
-      args
+      args,
     );
   }
 
@@ -99,7 +99,7 @@ export class DoGlobalRulesService {
 
   removeGlobalRulesByName(ruleNames: string[]): void {
     const rules = this._rules$.value;
-    ruleNames.forEach((ruleName) => {
+    ruleNames.forEach((ruleName: string): void => {
       delete rules[ruleName];
     });
     this._rules$.next(this.filterRule((rule) => ruleNames.includes(rule.name)));
@@ -107,12 +107,12 @@ export class DoGlobalRulesService {
 
   removeGlobalRulesByGroupName(groupName: string): void {
     this._rules$.next(
-      this.filterRule((rule) => rule.options.groupName !== groupName)
+      this.filterRule((rule): boolean => rule.options.groupName !== groupName),
     );
   }
 
   private filterRule(
-    needAddMethod: (rule: DoRuleType) => boolean
+    needAddMethod: (rule: DoRuleType) => boolean,
   ): DoStringDictionary<DoRuleType> {
     return Object.values(this._rules$.value).reduce((acc, nextRule) => {
       return {
@@ -129,6 +129,6 @@ export function permitted(roles: DoRoleType[]): DoStringDictionary<DoRuleType> {
       ...acc,
       ...role.can,
     }),
-    {}
+    {},
   );
 }

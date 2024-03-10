@@ -1,9 +1,8 @@
-
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
 import { Action, createReducer, on } from '@ngrx/store';
-import { User } from './../models/user';
-import { appActions } from './app.actions';
 
+import { User } from '../models/user';
+import { appActions } from './app.actions';
 
 export interface AppState extends EntityState<User> {
   currentUserId: string | null;

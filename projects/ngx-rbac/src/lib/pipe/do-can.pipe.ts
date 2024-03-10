@@ -19,8 +19,8 @@ import { DoRuleType } from '../type/do-rule-type';
   pure: false,
 })
 export class DoCanPipe implements PipeTransform, OnDestroy {
-  private destroy$ = new Subject<void>();
-  private markForTransform = true;
+  private destroy$: Subject<void> = new Subject<void>();
+  private markForTransform: boolean = true;
   private value: boolean;
 
   constructor(
@@ -29,14 +29,14 @@ export class DoCanPipe implements PipeTransform, OnDestroy {
     private source: DoProvideRulesComponent,
     @Optional()
     @SkipSelf()
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
     if (!source?.provideRulesService) {
       return;
     }
     this.source?.provideRulesService.changes$
       .pipe(takeUntil(this.destroy$))
-      .subscribe((providerKey) => {
+      .subscribe((providerKey): void => {
         this.markForTransform = true;
         this.changeDetectorRef.markForCheck();
       });

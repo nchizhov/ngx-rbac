@@ -10,7 +10,7 @@ import { commonCan } from '../helper/common-can';
 
 @Injectable()
 export class DoProvideRulesService implements OnDestroy {
-  private destroy$ = new Subject<void>();
+  private destroy$: Subject<void> = new Subject<void>();
 
   /** Rules getters */
   private _permitted$: BehaviorSubject<
@@ -32,6 +32,7 @@ export class DoProvideRulesService implements OnDestroy {
   public get permissionsValue(): DoStringDictionary<DoRuleType> {
     return this._permitted$.value;
   }
+
   // Rules: parent and current
   public get localRulesValue(): DoStringDictionary<DoRuleType> {
     return this._rules$.value;
@@ -74,6 +75,7 @@ export class DoProvideRulesService implements OnDestroy {
   public get mergedParentRolesValue(): DoRoleType[] {
     return [...this.globalRulesService.rolesValue, ...this.parentRoles];
   }
+
   // Roles: global, parent and current
   public get rolesValue(): DoRoleType[] {
     return [...this.globalRulesService.rolesValue, ...this.localRolesValue];
@@ -93,7 +95,7 @@ export class DoProvideRulesService implements OnDestroy {
         ...localRules,
       },
       roles: [...roles, ...localRoles],
-    }))
+    })),
   );
 
   can$ = this.changes$.pipe(
@@ -101,24 +103,25 @@ export class DoProvideRulesService implements OnDestroy {
       rules,
       roles,
       can: commonCan.bind(null, [roles], rules),
-    }))
+    })),
   );
 
-  constructor(private globalRulesService: DoGlobalRulesService) {}
+  constructor(private globalRulesService: DoGlobalRulesService) {
+  }
 
   can(ruleName: string, args?: any[]): any {
     return commonCan(
       [this.globalRulesService.rolesValue, this.mergedRulesAndPermissionsValue],
       this.mergedRulesAndPermissionsValue,
       ruleName,
-      args
+      args,
     );
   }
 
   nextRules(
     parentRules: DoStringDictionary<DoRuleType>,
-    rules: DoStringDictionary<DoRuleType>
-  ) {
+    rules: DoStringDictionary<DoRuleType>,
+  ): void {
     DoGlobalRulesService.nameRules(parentRules);
     DoGlobalRulesService.nameRules(rules);
 
@@ -127,7 +130,7 @@ export class DoProvideRulesService implements OnDestroy {
     this._rules$.next(concatRules);
   }
 
-  nextRoles(parentRoles: DoRoleType[], roles: DoRoleType[]) {
+  nextRoles(parentRoles: DoRoleType[], roles: DoRoleType[]): void {
     this.parentRoles = parentRoles;
     const concatRoles = [...parentRoles, ...roles];
     this._permitted$.next(permitted(concatRoles));

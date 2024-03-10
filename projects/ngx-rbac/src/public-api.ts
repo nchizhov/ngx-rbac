@@ -40,3 +40,7 @@ export {
   DoRulesType,
   DoRolesType,
 } from './lib/type/do-dictionary';
+
+export {
+  DoDebugPipe
+} from './lib/pipe/do-debug.pipe';

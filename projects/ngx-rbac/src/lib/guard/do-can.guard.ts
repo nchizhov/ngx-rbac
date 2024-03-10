@@ -6,13 +6,14 @@ import { DoGlobalRulesService } from '../service/do-global-rules.service';
 
 @Injectable({ providedIn: 'root' })
 export class DoCanGuard implements CanActivate {
-  constructor(private guardRulesService: DoGlobalRulesService) {}
+  constructor(private guardRulesService: DoGlobalRulesService) {
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
   ): Observable<boolean> | boolean {
-    return (route.data.rules as string[]).every((ruleName) => {
+    return (route.data.rules as string[]).every((ruleName: string) => {
       return this.guardRulesService.can(ruleName);
     });
   }

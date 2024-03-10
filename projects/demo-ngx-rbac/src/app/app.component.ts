@@ -5,7 +5,7 @@ import {
   DoGlobalRulesService,
   doNot,
   DoRoleType,
-} from '@doce/ngx-rbac';
+} from 'ngx-rbac';
 
 export const guest: DoRoleType = doCreateRole('GUEST');
 export const moderator: DoRoleType = doCreateRole('MODERATOR');

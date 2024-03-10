@@ -11,25 +11,27 @@ export class DoDebugPipe implements PipeTransform {
   constructor(
     @Optional()
     @SkipSelf()
-    private source: DoProvideRulesComponent
-  ) {}
+    private source: DoProvideRulesComponent,
+  ) {
+  }
 
   transform(rule: string): any {
     if (!(typeof rule === 'string' || (rule as any) instanceof DoRule)) {
       throw Error(
         'Transformed value must be string or DoChecker type but get: ' +
-          typeof rule
+        typeof rule,
       );
     }
     try {
       this.source?.provideRulesService.can(rule.toString(), []);
-    } catch (e) {}
+    } catch (e) {
+    }
     // todo drop error if no provider
     return (
       '<pre>' +
       this.source?.provideRulesService.mergedRulesAndPermissionsValue[
         rule
-      ]?.traceNames.join(' <br/>-> ') +
+        ]?.traceNames.join(' <br/>-> ') +
       '</pre>'
     );
   }

@@ -1,17 +1,17 @@
 // RBAC
-import { AppPermissions } from './../../rbac/permissions';
-import { AppRules } from './../../rbac/rules';
+import { AppPermissions } from '../../rbac/permissions';
+import { AppRules } from '../../rbac/rules';
 
 // Store
 import { Store } from '@ngrx/store';
-import { appActions } from './../../store/app.actions';
-import { AppState } from './../../store/app.reducer';
-import { selectUserEntities } from './../../store/app.selectors';
+import { appActions } from '../../store/app.actions';
+import { AppState } from '../../store/app.reducer';
+import { selectUserEntities } from '../../store/app.selectors';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { User } from './../../models/user';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-profile',

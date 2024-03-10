@@ -1,4 +1,4 @@
-import { doCreateRuleSet, doNot, doOr } from '@doce/ngx-rbac';
+import { doCreateRuleSet, doOr } from 'ngx-rbac';
 import { AppRoles } from './roles';
 
 

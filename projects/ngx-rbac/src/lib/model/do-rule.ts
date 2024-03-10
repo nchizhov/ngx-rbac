@@ -17,11 +17,11 @@ export class DoRule implements DoRuleType, DoDebugType {
 
   static checkerFactory(
     checkers: AllPossibleCheckers[],
-    options: DoRuleOptions
+    options: DoRuleOptions,
   ): DoRuleType {
     const elseCheckers: Array<DoRuleType | DoCheckerFunction | string> = [];
     const roleCheckers: string[] = [];
-    checkers.forEach((checker) => {
+    checkers.forEach((checker): void => {
       if (checker instanceof DoRole) {
         roleCheckers.push(checker.name);
       } else {
@@ -30,7 +30,7 @@ export class DoRule implements DoRuleType, DoDebugType {
     });
     const chainCheckers = doAnd(
       [doOr(roleCheckers, options), doAnd(elseCheckers, options)],
-      options
+      options,
     );
 
     return chainCheckers;
@@ -39,7 +39,7 @@ export class DoRule implements DoRuleType, DoDebugType {
   public get traceNames(): string[] {
     const tracedNames = Object.values(this.childRules)?.reduce(
       (acc, childRule) => [...acc, ...childRule.traceNames],
-      []
+      [],
     );
     return [this.name, ...(tracedNames || ['Dumb checker'])];
   }
@@ -52,7 +52,7 @@ export class DoRule implements DoRuleType, DoDebugType {
   constructor(
     checker: DoCheckerFunction | DoRuleType,
     name: string = 'No-name rule',
-    options: DoRuleOptions = DefaultRuleOptions
+    options: DoRuleOptions = DefaultRuleOptions,
   ) {
     this.name = name || 'No-name rule';
     if (checker instanceof DoRule) {
@@ -76,20 +76,20 @@ export class DoRule implements DoRuleType, DoDebugType {
 export function doCreateRule(
   name: string,
   args: AllPossibleCheckers[],
-  options?: DoRuleOptions
+  options?: DoRuleOptions,
 ): DoRuleType {
   return new DoRule(
     DoRule.checkerFactory(args, options || DefaultRuleOptions),
     name,
-    options
+    options,
   );
 }
 
 export function doSimpleRule(
   name: string,
-  options?: DoRuleOptions
+  options?: DoRuleOptions,
 ): DoStringDictionary<DoRule> {
-  return { [name]: doCreateRule(name, [() => true], options) };
+  return { [name]: doCreateRule(name, [(): boolean => true], options) };
 }
 
 export function doCreateRuleSet<
@@ -102,7 +102,7 @@ export function doCreateRuleSet<
       ...acc,
       [name]: doCreateRule(name, checker, options),
     }),
-    {} as any
+    {} as any,
   );
 }
 
@@ -113,24 +113,13 @@ export function doCreateSimpleRuleSet(ruleNames: string[], options?: DoRuleOptio
       ...acc,
       ...doSimpleRule(name, options),
     }),
-    {} as DoStringDictionary<DoRule>
+    {} as DoStringDictionary<DoRule>,
   );
 }
 
 export function doExtendRule(
   name: string,
-  args: AllPossibleCheckers[]
+  args: AllPossibleCheckers[],
 ): DoStringDictionary<DoRule> {
   return { [name]: doCreateRule(name, [name, ...args]) };
-}
-
-export function creatStringRule(checkerName: string): DoRuleType {
-  const parentRule = new DoRule((args, [userRoles, rulesSnapshot]) => {
-    if (!rulesSnapshot[checkerName]) {
-      throw Error('No rule for ' + checkerName);
-    }
-    parentRule.assignChildRules(rulesSnapshot[checkerName]);
-    return rulesSnapshot[checkerName].check(args, [userRoles, rulesSnapshot]);
-  }, `Look up for ${checkerName}`);
-  return parentRule;
 }

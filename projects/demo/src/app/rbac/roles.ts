@@ -1,4 +1,4 @@
-import { doCreateRole, DoRoleType } from '@doce/ngx-rbac';
+import { doCreateRole, DoRoleType } from 'ngx-rbac';
 import * as permissions from './permissions';
 
 export enum AppRoles {

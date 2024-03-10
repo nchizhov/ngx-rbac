@@ -10,9 +10,11 @@ export class DoPermission extends DoRolePermission
   get can(): DoStringDictionary<DoRuleType> {
     return this._canSelf;
   }
+
   get canNames(): string[] {
     return this._canNamesSelf;
   }
+
   constructor(name: string) {
     super(name);
   }
@@ -27,5 +29,5 @@ export function doCreatePermission(name: string): DoRolePermissionType {
 }
 
 export function doCreatePermissions(names: string[]): DoRolePermissionType[] {
-  return names.map((name) => new DoPermission(name));
+  return names.map((name: string) => new DoPermission(name));
 }

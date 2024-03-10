@@ -6,10 +6,10 @@ export function commonCan(
   dependency: Dependency,
   rulesComputed: DoStringDictionary<DoRuleType>,
   ruleName: string,
-  args?: any[]
+  args?: any[],
 ): boolean {
   const rule: DoRuleType = Object.values(rulesComputed).find(
-    (r) => r.name === ruleName
+    (r: DoRuleType): boolean => r.name === ruleName,
   );
 
   return !!rule ? rule.check(args, dependency) : false;

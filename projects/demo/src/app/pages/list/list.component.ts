@@ -1,16 +1,16 @@
 // RBAC
-import { AppPermissions } from './../../rbac/permissions';
-import { AppRules } from './../../rbac/rules';
+import { AppPermissions } from '../../rbac/permissions';
+import { AppRules } from '../../rbac/rules';
 
 // Store
 import { select, Store } from '@ngrx/store';
-import { appActions } from './../../store/app.actions';
-import { AppState } from './../../store/app.reducer';
-import { selectAllUsers } from './../../store/app.selectors';
+import { appActions } from '../../store/app.actions';
+import { AppState } from '../../store/app.reducer';
+import { selectAllUsers } from '../../store/app.selectors';
 
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from './../../models/user';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-list',
