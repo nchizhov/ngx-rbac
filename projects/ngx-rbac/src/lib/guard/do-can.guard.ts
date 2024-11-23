@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
+import {inject, Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot} from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { DoGlobalRulesService } from '../service/do-global-rules.service';
 
-@Injectable({ providedIn: 'root' })
-export class DoCanGuard implements CanActivate {
-  constructor(private guardRulesService: DoGlobalRulesService) {
-  }
+@Injectable({ providedIn: 'root'} )
+class PermissionsService {
+  constructor(private guardRulesService: DoGlobalRulesService) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -17,4 +16,8 @@ export class DoCanGuard implements CanActivate {
       return this.guardRulesService.can(ruleName);
     });
   }
+}
+
+export const DoCanGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean => {
+  return inject(PermissionsService).canActivate(next, state);
 }

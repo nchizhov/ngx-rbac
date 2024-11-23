@@ -1,9 +1,9 @@
 {
   "name": "@inok/ngx-rbac",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "peerDependencies": {
-    "@angular/common": "^14.3.0",
-    "@angular/core": "^14.3.0"
+    "@angular/common": "^15.2.10",
+    "@angular/core": "^15.2.10"
   },
   "description": "Forked angular library for RBAC",
   "repository": "git@github.com:nchizhov/ngx-rbac.git",
@@ -16,7 +16,7 @@
   "contributors": [{
     "name": "Chizhov Nikolay",
     "email": "admin@kgd.in",
-    "url": "http://blog.kgd.in"
+    "url": "https://blog.kgd.in"
   }],
   "license": "ISC",
   "bugs": {
