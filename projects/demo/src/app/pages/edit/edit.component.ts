@@ -15,7 +15,7 @@ import { AppState } from '../../store/app.reducer';
 import { selectUserEntities } from '../../store/app.selectors';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./edit.component.scss'],
 })
 export class EditComponent implements OnInit, OnDestroy {
-  public formGroup: FormGroup;
+  public formGroup: UntypedFormGroup;
   public userId: string;
   public authorized: DoRoleType = authorizedRole;
   public moderator: DoRoleType = moderatorRole;
@@ -46,27 +46,27 @@ export class EditComponent implements OnInit, OnDestroy {
         this.store.select(selectUserEntities).subscribe((users) => {
           const user = users[this.userId];
           if (user) {
-            this.formGroup = new FormGroup({
-              name: new FormControl(user.name, Validators.required),
-              deleted: new FormControl({
+            this.formGroup = new UntypedFormGroup({
+              name: new UntypedFormControl(user.name, Validators.required),
+              deleted: new UntypedFormControl({
                 value: user.deleted,
                 disabled: user.deleted
                   ? !this.doGlobalRulesService.can(AppPermissions.canRestore)
                   : !this.doGlobalRulesService.can(AppPermissions.canDelete),
               }),
-              roles: new FormControl([...user.roles], Validators.required),
+              roles: new UntypedFormControl([...user.roles], Validators.required),
             });
           }
         })
       );
     } else {
-      this.formGroup = new FormGroup({
-        name: new FormControl('', Validators.required),
-        deleted: new FormControl({
+      this.formGroup = new UntypedFormGroup({
+        name: new UntypedFormControl('', Validators.required),
+        deleted: new UntypedFormControl({
           value: false,
           disabled: !this.doGlobalRulesService.can(AppPermissions.canDelete),
         }),
-        roles: new FormControl(this.appRoles.authorized, Validators.required),
+        roles: new UntypedFormControl(this.appRoles.authorized, Validators.required),
       });
     }
   }
