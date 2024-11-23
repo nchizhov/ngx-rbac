@@ -10,13 +10,14 @@
     "experimentalDecorators": true,
     "module": "es2020",
     "moduleResolution": "node",
-    "target": "es2020",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
       "es2018",
-      "dom"],
+      "dom"
+    ],
     "paths": {
       "ngx-rbac": [
         "dist/ngx-rbac"
@@ -24,6 +25,7 @@
       "ngx-rbac/*": [
         "dist/ngx-rbac/*"
       ]
-    }
+    },
+    "useDefineForClassFields": false
   }
 }
